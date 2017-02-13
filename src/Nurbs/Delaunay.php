@@ -1,11 +1,13 @@
 <?php 
-class Nurbs_Delaunay
+namespace sroze\Nurbs;
+
+class Delaunay
 {
 	/**
 	 * Triangule les points.
 	 * 
-	 * @param array of Nurbs_Point
-	 * @return array of Nurbs_Triangle
+	 * @param array of sroze\Nurbs\Point
+	 * @return array of sroze\Nurbs\Triangle
 	 */
 	public static function triangulate (array $points)
 	{
@@ -49,9 +51,9 @@ class Nurbs_Delaunay
 		$ymid = ($ymax + $ymin) / 2;
 		
 		// On ajoutes nos trois points
-		$p1 = new Nurbs_Point(($xmid - 2 * $dmax), ($ymid - $dmax));
-		$p2 = new Nurbs_Point($xmid, ($ymid + 2 * $dmax));
-		$p3 = new Nurbs_Point(($xmid + 2 * $dmax), ($ymid - $dmax));
+		$p1 = new Point(($xmid - 2 * $dmax), ($ymid - $dmax));
+		$p2 = new Point($xmid, ($ymid + 2 * $dmax));
+		$p3 = new Point(($xmid + 2 * $dmax), ($ymid - $dmax));
 		
 		// On ajoutes des Id aux points
 		$p1->setId($nv+1);
@@ -65,7 +67,7 @@ class Nurbs_Delaunay
 		
 		// On créé la liste des triangles et on ajoutes le super-triangle
 		$triangles = array();
-		$triangles[] = new Nurbs_Triangle($p1, $p2, $p3);
+		$triangles[] = new Triangle($p1, $p2, $p3);
 		
 		// On ajoutes les points 1 par 1
 		for ($i = 0; $i < $nv; $i++) {
@@ -77,9 +79,9 @@ class Nurbs_Delaunay
 			for ($j = 0; $j < count($triangles); $j++) {
 				// On teste si le point est dans le cercle circonscrit du triangle
 				if ($triangles[$j]->pointInCircle($points[$i])) {
-					$edges[] = new Nurbs_Edge($triangles[$j]->p1, $triangles[$j]->p2);
-					$edges[] = new Nurbs_Edge($triangles[$j]->p2, $triangles[$j]->p3);
-					$edges[] = new Nurbs_Edge($triangles[$j]->p3, $triangles[$j]->p1);
+					$edges[] = new Edge($triangles[$j]->p1, $triangles[$j]->p2);
+					$edges[] = new Edge($triangles[$j]->p2, $triangles[$j]->p3);
+					$edges[] = new Edge($triangles[$j]->p3, $triangles[$j]->p1);
 					
 					// On supprime le triangle
 					array_splice($triangles, $j, 1);
@@ -111,7 +113,7 @@ class Nurbs_Delaunay
 				}
 				
 				// On ajoutes le triangle
-				$triangles[] = new Nurbs_Triangle($edges[$j]->p1, $edges[$j]->p2, $points[$i]);
+				$triangles[] = new Triangle($edges[$j]->p1, $edges[$j]->p2, $points[$i]);
 			}
 			
 			// On purge la liste des edges

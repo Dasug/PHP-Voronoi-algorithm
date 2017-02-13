@@ -1,4 +1,6 @@
-<?php 
+<?php
+namespace sroze\Nurbs;
+
 class Cell
 {
 	public $_site;

@@ -1,9 +1,13 @@
 <?php
+namespace sroze\Nurbs;
+
+use sroze\Nurbs\Surface\SurfaceAbstract;
+
 /**
  * Représente un triangle de Delaunay.
  * 
  */ 
-class Nurbs_Triangle extends Nurbs_Surface_Abstract
+class Triangle extends SurfaceAbstract
 {
 	/**
 	 * On stocke les points du triangle.
@@ -17,7 +21,7 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 	 * Créé le triangle, avec trois points.
 	 * 
 	 */
-	public function __construct (Nurbs_Point $p1, Nurbs_Point $p2, Nurbs_Point $p3)
+	public function __construct (Point $p1, Point $p2, Point $p3)
 	{
 		// On ajoutes les points à la surface.
 		$this->addPoints(array($p1, $p2, $p3));
@@ -44,7 +48,7 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 	 * triangle.
 	 * 
 	 */
-	public function pointInCircle (Nurbs_Point $point)
+	public function pointInCircle (Point $point)
 	{
 		// On vérifie que le triangle est valide
 		if (!$this->isValid()) {
@@ -98,12 +102,12 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 	 * 
 	 * @return bool
 	 */
-	public function pointIn (Nurbs_Point $point)
+	public function pointIn (Point $point)
 	{
 		// On calcul les vecteurs
-		$v0 = Nurbs_Vector::fromPoints($this->p3, $this->p1);
-		$v1 = Nurbs_Vector::fromPoints($this->p2, $this->p1);
-		$v2 = Nurbs_Vector::fromPoints($point, $this->p1);
+		$v0 = Vector::fromPoints($this->p3, $this->p1);
+		$v1 = Vector::fromPoints($this->p2, $this->p1);
+		$v2 = Vector::fromPoints($point, $this->p1);
 		
 		// On calcul le produit scalaire des vecteurs
 		$dot00 = $v0->produitScalaire($v0);
@@ -124,7 +128,7 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 	/**
 	 * Retourne un rectangle englobant le triangle.
 	 * 
-	 * @return array[Nurbs_Point 1, Nurbs_Point 2]
+	 * @return array[sroze\Nurbs\Point 1, sroze\Nurbs\Point 2]
 	 */
 	public function getRect ()
 	{
@@ -133,7 +137,7 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 		$x2 = max(array($this->p1->x, $this->p2->x, $this->p3->x));
 		$y2 = max(array($this->p1->y, $this->p2->y, $this->p3->y));
 		
-		return array(new Nurbs_Point($x1, $y1), new Nurbs_Point($x2, $y2));
+		return array(new Point($x1, $y1), new Point($x2, $y2));
 	}
 	
 	/**
@@ -141,12 +145,12 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 	 * 
 	 * @see http://fr.wikipedia.org/wiki/Plan_%28math%C3%A9matiques%29#D.C3.A9finition_par_un_vecteur_normal_et_un_point
 	 * 
-	 * @return Nurbs_Point
+	 * @return sroze\Nurbs\Point
 	 */
 	public function getPoint ($x, $y)
 	{
 		// On construit le point
-		$point = new Nurbs_Point($x, $y, 0);
+		$point = new Point($x, $y, 0);
 		
 		// On cherche le vecteur normal au plan du triangle
 		$v_triangle_normal = $this->getNormalVector();
@@ -166,13 +170,13 @@ class Nurbs_Triangle extends Nurbs_Surface_Abstract
 	 * 
 	 * @see http://fr.wikipedia.org/wiki/Plan_%28math%C3%A9matiques%29#D.C3.A9finition_par_deux_vecteurs_et_un_point
 	 * 
-	 * @return Nurbs_Vector
+	 * @return sroze\Nurbs\Vector
 	 */
 	public function getNormalVector ()
 	{
 		// On va calculer deux vecteurs partant de A
-		$v1 = Nurbs_Vector::fromPoints($this->p2, $this->p1);
-		$v2 = Nurbs_Vector::fromPoints($this->p3, $this->p1);
+		$v1 = Vector::fromPoints($this->p2, $this->p1);
+		$v2 = Vector::fromPoints($this->p3, $this->p1);
 		
 		// On va maintenant calculer le vecteur normal grâce au produit
 		// vectoriel.

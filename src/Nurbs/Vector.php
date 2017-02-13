@@ -1,12 +1,14 @@
 <?php 
-class Nurbs_Vector extends Nurbs_Point
+namespace sroze\Nurbs;
+
+class Vector extends Point
 {
 	/**
 	 * Créé un vecteur à partir de deux points.
 	 * 
-	 * @return Nurbs_Vector
+	 * @return sroze\Nurbs\Vector
 	 */
-	public static function fromPoints (Nurbs_Point $p1, Nurbs_Point $p2)
+	public static function fromPoints (Point $p1, Point $p2)
 	{
 		return new self(
 			$p2->x - $p1->x,
@@ -22,7 +24,7 @@ class Nurbs_Vector extends Nurbs_Point
 	 * 
 	 * @return double
 	 */
-	public function produitScalaire (Nurbs_Vector $vector)
+	public function produitScalaire (Vector $vector)
 	{
 		$scal_z = ($this->z != null && $vector->z != null) ? $this->z * $vector->z : 0;
 		return ($this->x * $vector->x + $this->y * $vector->y + $scal_z);
@@ -33,11 +35,11 @@ class Nurbs_Vector extends Nurbs_Point
 	 * 
 	 * @see http://homeomath.imingo.net/prodvect.htm
 	 * 
-	 * @return Nurbs_Vector
+	 * @return sroze\Nurbs\Vector
 	 */
-	public function produitVectoriel (Nurbs_Vector $vector)
+	public function produitVectoriel (Vector $vector)
 	{
-		return new Nurbs_Vector(
+		return new Vector(
 			$this->y * $vector->z - $this->z * $vector->y,
 			$this->z * $vector->x - $this->x * $vector->z,
 			$this->x * $vector->y - $this->y * $vector->x

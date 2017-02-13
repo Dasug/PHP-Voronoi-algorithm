@@ -1,4 +1,6 @@
 <?php
+namespace sroze\Nurbs;
+
 /**
  * Implémentation du Red-Black tree.
  * 

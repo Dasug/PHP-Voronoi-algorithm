@@ -1,6 +1,8 @@
-<?php 
-require_once '../src/Nurbs/Voronoi.php';
-require_once '../src/Nurbs/Point.php';
+<?php
+require '../vendor/autoload.php';
+
+use sroze\Nurbs\Voronoi;
+use sroze\Nurbs\Point;
 
 // Create the border box object
 $bbox = new stdClass();
@@ -26,7 +28,7 @@ imagefill($im, 0, 0, $white);
 
 // Create random points and draw them
 for ($i=0; $i < $n; $i++) {
-	$point = new Nurbs_Point(rand($xo, $dx), rand($yo, $dy));
+	$point = new Point(rand($xo, $dx), rand($yo, $dy));
 	$sites[] = $point;
 	
 	imagerectangle($im, $point->x - 2, $point->y - 2, $point->x + 2, $point->y + 2, $black);

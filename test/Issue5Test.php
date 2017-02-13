@@ -1,7 +1,9 @@
 <?php
-require_once '../src/Nurbs/Voronoi.php';
-require_once '../src/Nurbs/Point.php';
+require_once '../vendor/autoload.php';
 require_once '../bin/phpunit.phar';
+
+use sroze\Nurbs\Point;
+use sroze\Nurbs\Voronoi;
 
 /**
  * A PHPUnit test for GitHub issue #5
@@ -33,7 +35,7 @@ class Issue5Test extends PHPUnit_Framework_TestCase
         // Create points
         $points = array();
         foreach ($basic_points as $basic_point) {
-        	$points[] = new Nurbs_Point($basic_point[0], $basic_point[1]);
+        	$points[] = new Point($basic_point[0], $basic_point[1]);
         }
 
         // Create diagram

@@ -1,0 +1,19 @@
+{
+    "name": "sroze/php-voronoi",
+    "description": "PHP implementation of Steven Fortune's Voronoï algorithm",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel ROZE",
+            "email": "sroze@lillemetropole.fr"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "sroze\\Nurbs\\": "src/Nurbs/"
+        }
+    },
+    "require": {}
+}

@@ -1,9 +1,11 @@
 <?php 
+namespace sroze\Nurbs;
+
 /**
  * Représente un point défini par ses trois coordonnées.
  * 
  */
-class Nurbs_Point
+class Point
 {
 	// Coordonnées du point
 	public $x;
@@ -41,7 +43,7 @@ class Nurbs_Point
 	 * Regarde si deux points sont identiques.
 	 * 
 	 */
-	public function equals (Nurbs_Point $point)
+	public function equals (Point $point)
 	{
 		return ($this->x == $point->x && $this->y == $point->y && (($this->z == null && $point->z == null) || $this->z == $point->z));
 	}
