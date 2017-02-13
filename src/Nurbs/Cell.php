@@ -5,11 +5,13 @@ class Cell
 {
 	public $_site;
 	public $_halfedges;
+	public $_corners;
 	
 	public function __construct ($site)
 	{
 		$this->_site = $site;
 		$this->_halfedges = array();
+		$this->_corners = array();
 	}
 	
 	public function prepare ()
@@ -25,6 +27,13 @@ class Cell
 			$edge = $this->_halfedges[$iHalfedge]->edge;
 			if (!$edge->vb || !$edge->va) {
 				array_splice($this->_halfedges, $iHalfedge, 1);
+			} else {
+				$startpoint = $this->_halfedges[$iHalfedge]->getStartpoint();
+				$endpoint = $this->_halfedges[$iHalfedge]->getEndpoint();
+				if (!in_array($startpoint, $this->_corners, true))
+					$this->_corners[] = $startpoint;
+				if (!in_array($endpoint, $this->_corners, true))
+					$this->_corners[] = $endpoint;
 			}
 		}
 		
